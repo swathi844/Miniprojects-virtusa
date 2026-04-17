@@ -73,9 +73,9 @@ public class Main {
         System.out.println("\n--- Meter Bill Summary ---");
         System.out.println("Customer: " + customer);
         System.out.println("Units consumed: " + units);
-        System.out.printf("Base amount: ₹%.2f%n", baseAmount);
-        System.out.printf("Tax (5%%): ₹%.2f%n", tax);
-        System.out.printf("Total due: ₹%.2f%n", total);
+        System.out.printf("Base amount: Rs.%.2f%n", baseAmount);
+        System.out.printf("Tax (5%%): Rs.%.2f%n", tax);
+        System.out.printf("Total due: Rs.%.2f%n", total);
         System.out.println("-----------------------------");
     }
 }
