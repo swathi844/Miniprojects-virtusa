@@ -6,31 +6,35 @@ This repository contains three mini projects developed as part of hands-on pract
 
 ---
 
-#Python Project: Social Media Content Sanitizer
+# Python Project: Social Media Content Sanitizer
 
-# Description
+## Description
 
 This project simulates a content moderation system used in social media platforms. It scans user posts, removes inappropriate words, and extracts web links for review.
 
-# Features
+## Features
 
-* Replaces banned words with "***"
-* Extracts URLs from posts
-* Tracks how many times each user posts inappropriate content
-* Stores extracted links in a file
+- Replaces banned words with "***"
+- Extracts URLs from posts
+- Tracks how many times each user posts inappropriate content
+- Stores extracted links in a file
 
-# Concepts Used
+## Concepts Used
 
-* Regular Expressions (Regex)
-* String processing
-* Dictionary (for user tracking)
-* File handling
+- String processing
+- List handling
+- Dictionary (for user tracking)
+- File handling
+- .replace() method
+- .startswith() method
 
-# Logic
+## Logic
 
-The program reads a list of posts, checks for banned words, replaces them using pattern matching, extracts links, and maintains a summary of flagged users.
+The program reads a list of sample posts and checks each post for banned words like "bad", "toxic", and "hate". If a banned word is found, it is replaced with "***" using the `.replace()` method.
 
----
+Then, the program checks each word in the post using `.startswith("http")` to identify web links and stores those links in a separate text file called `links_found.txt`.
+
+A dictionary is used to count how many times each user posts flagged content. Finally, the program prints a summary report showing total posts screened, cleaned posts, blocked posts, and user flag details.
 
 # Java Project: Utility Bill Generator
 
