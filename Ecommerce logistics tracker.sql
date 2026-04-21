@@ -1,4 +1,4 @@
--- 1. Create Tables
+
 
 CREATE TABLE Partners (
     partner_id INT PRIMARY KEY,
@@ -22,9 +22,7 @@ CREATE TABLE DeliveryLogs (
     FOREIGN KEY (shipment_id) REFERENCES Shipments(shipment_id)
 );
 
------------------------------------------------------
 
--- 2. Insert Sample Data
 
 INSERT INTO Partners VALUES
 (1, 'FastExpress'),
@@ -45,17 +43,13 @@ INSERT INTO DeliveryLogs VALUES
 (4, 104, 'Successful'),
 (5, 105, 'Returned');
 
------------------------------------------------------
 
--- 3. Delayed Shipments Query
 
 SELECT shipment_id, promised_date, actual_delivery_date
 FROM Shipments
 WHERE actual_delivery_date > promised_date;
 
------------------------------------------------------
 
--- 4. Performance Ranking (Success vs Returned)
 
 SELECT p.partner_name, d.status, COUNT(*) AS total
 FROM DeliveryLogs d
@@ -63,9 +57,7 @@ JOIN Shipments s ON d.shipment_id = s.shipment_id
 JOIN Partners p ON s.partner_id = p.partner_id
 GROUP BY p.partner_name, d.status;
 
------------------------------------------------------
 
--- 5. Zone Filter (Most Popular Destination City)
 
 SELECT destination_city, COUNT(*) AS total_orders
 FROM Shipments
