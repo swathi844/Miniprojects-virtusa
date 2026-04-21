@@ -1,4 +1,5 @@
-import re
+
+
 
 posts = [
     "User123: I hate this bad app http://test.com",
@@ -8,57 +9,57 @@ posts = [
     "User456: bad experience with this http://badlink.com"
 ]
 
+
 banned_words = ["bad", "toxic", "hate"]
-LINKS_FILE = "links_found.txt"
-
-def mask_banned_words(text, banned):
-    pattern = re.compile(r"\b(" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
-    return pattern.sub("***", text)
 
 
-def extract_links(text):
-    return re.findall(r"https?://\S+", text)
+links_found = []
 
 
-def sanitize_post(post):
-    username, message = post.split(":", 1)
-    username = username.strip()
-    message = message.strip()
-    cleaned_message = mask_banned_words(message, banned_words)
-    links = extract_links(cleaned_message)
-    flagged = cleaned_message != message
-    return username, cleaned_message, links, flagged
+user_flags = {}
 
 
-def save_links(links, filename=LINKS_FILE):
-    with open(filename, "w", encoding="utf-8") as output:
-        output.write("\n".join(links))
+total_posts = len(posts)
+cleaned = 0
+blocked = 0
 
 
-def main():
-    links_found = []
-    user_flags = {}
-    cleaned_count = 0
-    blocked_count = 0
+for post in posts:
 
-    for post in posts:
-        user, cleaned_message, links, flagged = sanitize_post(post)
-        links_found.extend(links)
+    
+    user = post.split(":")[0]
+    text = post
 
-        if flagged:
-            cleaned_count += 1
-            blocked_count += 1
-            user_flags[user] = user_flags.get(user, 0) + 1
-        else:
-            user_flags.setdefault(user, 0)
+    flagged = False
 
-        print(f"{user}: {cleaned_message}")
+    
+    for word in banned_words:
+        if word in text:
+            text = text.replace(word, "***")
+            flagged = True
 
-    save_links(links_found)
+    
+    if flagged:
+        cleaned += 1
+        blocked += 1
+        user_flags[user] = user_flags.get(user, 0) + 1
+    else:
+        user_flags[user] = user_flags.get(user, 0)
 
-    print(f"\nTotal posts processed: {len(posts)} | Cleaned: {cleaned_count} | Blocked: {blocked_count}")
-    print("User flag summary:", user_flags)
+    
+    words = text.split()
+    for w in words:
+        if w.startswith("http"):
+            links_found.append(w)
+
+    
+    print(text)
 
 
-if __name__ == "__main__":
-    main()
+with open("links_found.txt", "w") as file:
+    for link in links_found:
+        file.write(link + "\n")
+
+
+print(f"\nTotal Posts Screened: {total_posts} | Cleaned: {cleaned} | Blocked: {blocked}")
+print("User Flag Summary:", user_flags)
